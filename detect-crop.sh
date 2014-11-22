@@ -107,6 +107,11 @@ escape_string() {
     echo "$1" | sed "s/'/'\\\''/g;/ /s/^\(.*\)$/'\1'/"
 }
 
+
+# automatically create txt-files for crop-values
+
+batch_folder="../crops/"
+
 print_commands() {
     echo
 
@@ -117,6 +122,18 @@ print_commands() {
     fi
 
     echo "transcode-video.sh $([ "$title" == '1' ] || echo "--title $title ")--crop $2 $(escape_string "$input")"
+    echo
+    echo
+
+input_base="$input"
+input_base=${input_base##*/}
+input_base=${input_base%.*}
+batch_ext=".txt"
+full_filepath="$batch_folder$input_base$batch_ext"
+
+    echo "Writing $2 to $full_filepath for $input_base"
+    echo "$2" > "$full_filepath"
+
     echo
 }
 
