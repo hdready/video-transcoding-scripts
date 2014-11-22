@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 echo "Make sure cpulimit is installed via Homebrew Cask (brew install cpulimit)"
@@ -17,11 +18,9 @@ cpu_input="${cpu_input:-$default_percentage}"
 
 # user has 15 seconds to input other value than the default percentage or correct the last input
 if [ $default_percentage == $cpu_input ]; then
-echo "Please enter the maximum percentage of CPU HandBrake may use"
-echo "wait 15 seconds to use the default value: $cpu_input%"
+echo "Please enter the maximum percentage of CPU HandBrake may use or wait 15 seconds to use the default value: $cpu_input%"
 else
-echo "Please enter the maximum percentage of CPU HandBrake may use 
-echo "or wait 15 seconds to use your last input: $cpu_input%"
+echo "Please enter the maximum percentage of CPU HandBrake may use or wait 15 seconds to use your last input: $cpu_input%"
 fi
 
 read -t 15 cpu_input
@@ -32,11 +31,9 @@ cpu_input=${cpu_input//[%]/}
 cpu_max=$(($number_cpus * $cpu_input))
 
 if [ $default_percentage == $cpu_input ]; then
-    echo "Using default CPU usage: $cpu_max%"
-    echo "This is $cpu_input% on each of your $number_cpus CPUs"
+echo "Using default CPU usage: $cpu_max% ($percentage% on each of your $number_cpus CPUs)"
 else
-    echo "Maximum CPU usage is $cpu_max%"
-    echo "This is $cpu_input% on each of your $number_cpus CPUs"
+echo "Maximum CPU usage is $cpu_max% ($cpu_input% on each of your $number_cpus CPUs)"
 fi
 
 
