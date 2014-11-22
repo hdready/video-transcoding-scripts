@@ -6,12 +6,6 @@
 #
 
 
-
-# this needs to be a variable like --move_directory
-move_directory="/Volumes/Simple Storage Service/Filme/"
-
-
-
 about() {
     cat <<EOF
 $program 4.3 of November 16, 2014
@@ -290,6 +284,10 @@ while [ "$1" ]; do
             if (($max_bitrate < 1)); then
                 die "invalid maximum video bitrate: $max_bitrate"
             fi
+            ;;
+        --move-to-directory)
+            move_directory="$2"
+            shift
             ;;
         --vbv-bufsize)
             vbv_bufsize="$(printf '%.0f' "$2")"
@@ -1099,6 +1097,8 @@ if [ "$debug" ]; then
 fi
 
 echo "Transcoding: $input" >&2
+
+echo "File will be moved to $move_directory later"
 
 time {
     HandBrakeCLI \

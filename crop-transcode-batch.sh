@@ -44,7 +44,7 @@ fi
 
 sed -i '' 1d "$trans_queue" || exit 1
 
-../transcode-video.sh --mkv --big --slow --add-audio 2 --add-audio 3 --add-audio 4 $crop_option "../transcode/$input"
+../transcode-video.sh --mkv --big --slow --add-audio 2 --add-audio 3 --add-audio 4 --move-to-directory "/Volumes/Simple Storage Service/Filme/" $crop_option "../transcode/$input"
 
 input="$(sed -n 1p "$trans_queue")"
 done
