@@ -32,9 +32,11 @@ cpu_input=${cpu_input//[%]/}
 cpu_max=$(($number_cpus * $cpu_input))
 
 if [ $default_percentage == $cpu_input ]; then
-    echo "Using default CPU usage: $cpu_max% ($cpu_input% on each of your $number_cpus CPUs)"
+    echo "Using default CPU usage: $cpu_max%"
+    echo "This is $cpu_input% on each of your $number_cpus CPUs"
 else
-    echo "Maximum CPU usage is $cpu_max% ($cpu_input% on each of your $number_cpus CPUs)"
+    echo "Maximum CPU usage is $cpu_max%"
+    echo "This is $cpu_input% on each of your $number_cpus CPUs"
 fi
 
 
