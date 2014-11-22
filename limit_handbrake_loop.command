@@ -18,10 +18,10 @@ cpu_input="${cpu_input:-$default_percentage}"
 # user has 15 seconds to input other value than the default percentage or correct the last input
 if [ $default_percentage == $cpu_input ]; then
 echo "Please enter the maximum percentage of CPU HandBrake may use"
-echo "(wait 15 seconds to use the default value: $cpu_input%):"
+echo "wait 15 seconds to use the default value: $cpu_input%"
 else
 echo "Please enter the maximum percentage of CPU HandBrake may use 
-echo "(wait 15 seconds to use your last input: $cpu_input%):"
+echo "or wait 15 seconds to use your last input: $cpu_input%"
 fi
 
 read -t 15 cpu_input
