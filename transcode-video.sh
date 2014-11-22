@@ -5,6 +5,13 @@
 # Copyright (c) 2013-2014 Don Melton
 #
 
+
+
+# this needs to be a variable like --move_directory
+move_directory="/Volumes/Simple Storage Service/Filme/"
+
+
+
 about() {
     cat <<EOF
 $program 4.3 of November 16, 2014
@@ -215,8 +222,8 @@ frame_rate_options=''
 audio_track=''
 extra_audio_track_list=''
 extra_audio_track_name_list=''
-ac3_bitrate='384'
-pass_ac3_bitrate='448'
+ac3_bitrate='448'
+pass_ac3_bitrate='384'
 with_original_audio=''
 original_audio_track=''
 crop='0:0:0:0'
@@ -870,26 +877,24 @@ if [ "$all_audio_tracks_info" ]; then
                 pass_ac3_bitrate="$ac3_bitrate"
             fi
 
-            if [[ "$audio_track_info" =~ '(AC3)' ]] && ((($audio_track_bitrate / 1000) <= $pass_ac3_bitrate)); then
+            if [[ "$audio_track_info" =~ '(AC3)' ]] || [[ "$audio_track_info" =~ '(ac3)' ]]; then
 
-                if [ "$container_format" == 'mkv' ]; then
-                    audio_encoder_list="copy:ac3,$aac_encoder"
+                audio_encoder_list="copy:ac3"
+
+                elif [[ "$audio_track_info" =~ '(DTS)' ]] || [[ "$audio_track_info" =~ '(dts)' ]]; then
+                audio_encoder_list="$ac3_encoder"
+                audio_bitrate_list="$ac3_bitrate"
+
+                elif [[ "$audio_track_info" =~ '(AAC)' ]] || [[ "$audio_track_info" =~ '(aac)' ]]; then
+                audio_encoder_list='copy:aac'
+
                 else
-                    audio_encoder_list="$aac_encoder,copy:ac3"
-                fi
-
-            elif [ "$container_format" == 'mkv' ]; then
-                audio_encoder_list="$ac3_encoder,$aac_encoder"
-                audio_bitrate_list="$ac3_bitrate,"
-            else
-                audio_encoder_list="$aac_encoder,$ac3_encoder"
-                audio_bitrate_list=",$ac3_bitrate"
+                audio_encoder_list="$ac3_encoder"
+                audio_bitrate_list="$ac3_bitrate"
             fi
         fi
-
-    elif [[ "$audio_track_info" =~ '(AAC)' ]] || [[ "$audio_track_info" =~ '(aac)' ]]; then
-        audio_encoder_list='copy:aac'
     fi
+
 
     if [ "$with_original_audio" ]; then
 
@@ -995,7 +1000,10 @@ if [ "$subtitle_track" ]; then
         die "\`subtitle $subtitle_track\` track not found in: $input"
     fi
 
-    subtitle_options="--subtitle $subtitle_track --subtitle-burned"
+
+    # tinkered with options to include all subs
+    subtitle_options="--subtitle 1,2,3,4,5,6,7,8,9"
+
 fi
 
 if (($srt_count > 0)); then
@@ -1115,6 +1123,17 @@ time {
         --input "$input" \
         --output "$output" \
         2>&1 | tee -a "${output}.log"
+
+
+    # tinkered to move files
+
+    echo "Moving existing output file"
+    mv -f -v "$output" "$move_directory"
+
+    echo "Deleting input file"
+    rm "$input"
+
+
 
     if [ "$container_format" == 'mkv' ] && (($srt_forced_index > 0)) && [ -f "$output" ]; then
         mkvpropedit --quiet --edit track:s$srt_forced_index --set flag-forced=1 "$output" || exit 1
