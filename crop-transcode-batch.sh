@@ -50,12 +50,39 @@ input="$(sed -n 1p "$trans_queue")"
 done
 
 
+
+echo "Waiting 10 minutes for restart..."
+sleep 60
+echo "Waiting  9 minutes for restart..."
+sleep 60
+echo "Waiting  8 minutes for restart..."
+sleep 60
+echo "Waiting  7 minutes for restart..."
+sleep 60
+echo "Waiting  6 minutes for restart..."
+sleep 60
+echo "Waiting  5 minutes for restart..."
+sleep 60
+echo "Waiting  4 minutes for restart..."
+sleep 60
+echo "Waiting  3 minutes for restart..."
+sleep 60
+echo "Waiting  2 minutes for restart..."
+sleep 60
 echo "Waiting 60 seconds for restart..."
 sleep 30
 echo "Waiting 30 seconds for restart..."
 sleep 25
-echo "Waiting 5 seconds for restart..."
-sleep 5
+echo "Waiting  5 seconds for restart..."
+sleep 1
+echo "Waiting  4 seconds for restart..."
+sleep 1
+echo "Waiting  3 seconds for restart..."
+sleep 1
+echo "wait for it..."
+sleep 1
+echo "Here we go again!"
+sleep 1
 
 cd ..
 pwd
