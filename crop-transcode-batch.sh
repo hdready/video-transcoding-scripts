@@ -5,6 +5,32 @@ readonly queue="$work/crop-queue.txt"
 readonly trans_queue="$work/transcode-queue.txt"
 readonly trans_crops="$work/crops"
 
+#default directory to move to
+readonly default_movedirectory="/Volumes/Simple Storage Service/Filme/"
+movedirectory="$default_movedirectory"
+reply="y"
+
+echo
+read -t 30 -p "Do you want to move your files somewhere else after transcoding? " -n 1 -r reply
+echo
+    if [[ $reply =~ ^[Yy]$ ]]; then
+        read -t 60 -p "Where? " -r movedirectory
+
+        if [ ! $movedirectory ]; then
+            movedirectory="$default_movedirectory"
+        fi
+
+        echo "After transcoding, your files will be moved to $movedirectory"
+        sleep 3
+
+    else
+        echo "Alright, files stay where they belong"
+        sleep 3
+
+    fi
+
+
+
 while :
 
 do
@@ -44,7 +70,11 @@ fi
 
 sed -i '' 1d "$trans_queue" || exit 1
 
-../transcode-video.sh --mkv --big --slow --add-audio 2 --add-audio 3 --add-audio 4 --move-to-directory "/Volumes/Simple Storage Service/Filme/" $crop_option "../transcode/$input"
+if [[ $reply =~ ^[Yy]$ ]]; then
+    ../transcode-video.sh --mkv --big --slow --add-audio 2 --add-audio 3 --add-audio 4 --move-to-directory "$movedirectory" $crop_option "../transcode/$input"
+    else
+    ../transcode-video.sh --mkv --big --slow --add-audio 2 --add-audio 3 --add-audio 4 $crop_option "../transcode/$input"
+fi
 
 input="$(sed -n 1p "$trans_queue")"
 done
