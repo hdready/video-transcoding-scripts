@@ -38,10 +38,9 @@ re='^[0-9]+$'
 if ! [[ $cpu_input =~ $re ]]; then
     echo "$cpu_input is invalid, using default value."
     cpu_input=$cpu_input_old
-elif [ $cpu_limit >= 101 ]; then
-    echo "More than 100% is not possible, using default value."
+elif [ "$cpu_input" -gt 100 ]; then
+    echo "$cpu_input is too high, using default value."
     cpu_input=$cpu_input_old
-
 fi
 
 # calculate cpulimit
