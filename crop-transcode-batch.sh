@@ -11,13 +11,16 @@ movedirectory="$default_movedirectory"
 reply="y"
 
 echo
-read -t 30 -p "Do you want to move your files somewhere else after transcoding? " -n 1 -r reply
+read -t 30 -p "Do you want to move your files somewhere else after transcoding? (y/n)" -n 1 -r reply
 echo
     if [[ $reply =~ ^[Yy]$ ]]; then
         read -t 60 -p "Where? " -r movedirectory
 
+# Missing: Check if movedirectory is valid
+
         if [ ! $movedirectory ]; then
             movedirectory="$default_movedirectory"
+
         fi
 
         echo "After transcoding, your files will be moved to $movedirectory"
