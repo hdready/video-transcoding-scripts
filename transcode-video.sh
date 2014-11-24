@@ -1098,7 +1098,10 @@ fi
 
 echo "Transcoding: $input" >&2
 
-echo "File will be moved to $move_directory later"
+if [[ $move_directory ]]; then
+    echo "File will be moved to $move_directory later"
+fi
+
 
 time {
     HandBrakeCLI \
@@ -1127,8 +1130,11 @@ time {
 
     # tinkered to move files
 
-    echo "Moving existing output file"
-    mv -f -v "$output" "$move_directory"
+
+    if [[ $move_directory ]]; then
+        echo "Moving existing output file"
+        mv -f -v "$output" "$move_directory"
+    fi
 
     echo "Deleting input file"
     rm "$input"
