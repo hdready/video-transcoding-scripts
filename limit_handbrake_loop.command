@@ -11,7 +11,7 @@ echo
 # readout number of CPUs
 number_cpus="$(getconf _NPROCESSORS_ONLN)"
 # default percentage used in case user enters no value
-default_percentage="80"
+default_percentage="60"
 
 # in case user has not put in any value, default or previously entered percentage will be used
 cpu_input="${cpu_input:-$default_percentage}"
@@ -39,7 +39,7 @@ if ! [[ $cpu_input =~ $re ]]; then
     echo "$cpu_input is invalid, using default value."
     cpu_input=$cpu_input_old
 elif [ "$cpu_input" -gt 100 ]; then
-    echo "$cpu_input is too high, using default value."
+    echo "$cpu_input is too high, overclocking is not supported."
     cpu_input=$cpu_input_old
 fi
 
