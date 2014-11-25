@@ -289,6 +289,10 @@ while [ "$1" ]; do
             move_directory="$2"
             shift
             ;;
+        --add-suffix)
+            add_suffix="$2"
+            shift
+            ;;
         --vbv-bufsize)
             vbv_bufsize="$(printf '%.0f' "$2")"
             shift
@@ -607,7 +611,13 @@ if [ ! "$(echo "$media_info" | sed -n '/^+ title /,$p')" ]; then
     exit 1
 fi
 
-readonly output="$(basename "$input" | sed 's/\.[^.]\{1,\}$//').$container_format"
+
+if [[ $add_suffix ]]; then
+    readonly output="$(basename "$input" | sed 's/\.[^.]\{1,\}$//').$add_suffix.$container_format"
+else
+    readonly output="$(basename "$input" | sed 's/\.[^.]\{1,\}$//').$container_format"
+fi
+
 
 if [ -e "$output" ]; then
     die "output file already exists: $output"
