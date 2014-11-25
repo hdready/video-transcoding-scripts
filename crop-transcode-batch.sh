@@ -73,9 +73,11 @@ fi
 
 sed -i '' 1d "$trans_queue" || exit 1
 
-
-../transcode-video.sh --mkv --big --slow --add-audio 2 --add-audio 3 --add-audio 4 --add-suffix enc --move-to-directory if [[ $reply =~ ^[Yy]$ ]]; then "$movedirectory" fi $crop_option "../transcode/$input"
-
+if [[ $reply =~ ^[Yy]$ ]]; then
+    ../transcode-video.sh --mkv --big --slow --add-audio 2 --add-audio 3 --add-audio 4 --add-suffix enc --move-to-directory "$movedirectory" $crop_option "../transcode/$input"
+else
+    ../transcode-video.sh --mkv --big --slow --add-audio 2 --add-audio 3 --add-audio 4 --add-suffix enc $crop_option "../transcode/$input"
+fi
 
 input="$(sed -n 1p "$trans_queue")"
 done
