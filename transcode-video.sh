@@ -618,6 +618,9 @@ else
     readonly output="$(basename "$input" | sed 's/\.[^.]\{1,\}$//').$container_format"
 fi
 
+readonly crop_name="$(basename "$input" | sed 's/\.[^.]\{1,\}$//').txt"
+readonly crop_path="../crops/$crop_name"
+
 
 if [ -e "$output" ]; then
     die "output file already exists: $output"
@@ -1146,9 +1149,9 @@ time {
         mv -f -v "$output" "$move_directory"
     fi
 
-    echo "Deleting input file"
+    echo "Deleting input & crop file"
     rm "$input"
-
+    rm "$crop_path"
 
 
     if [ "$container_format" == 'mkv' ] && (($srt_forced_index > 0)) && [ -f "$output" ]; then
