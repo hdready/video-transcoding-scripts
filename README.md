@@ -105,6 +105,12 @@ To autorun `crop-transcode-batch.sh` on startup, create a file named `crop-trans
 
 On your mac, go into `System Settings`, select `Users & Groups`, select your user account, then `login objects` and press `+`. Choose the `crop-transcode-autorun.command` you just created and you're done. 
 
+## Limit CPU usage of HandBrakeCLI with `autorun-cpulimit.command`
+
+By default `HandBrakeCLI` uses the full amount of processing speed your CPU can offer. When running these scripts in batch mode to transcode a lot of movies, this can lead to overheating and damage your system. Use `autorun-cpulimit.command` to reduce the amount of processing speed to a percentage you are comfortable with.
+
+For `autorun-cpulimit.command` the documentation can be found in the [aurorun-cpulimit github repository](https://github.com/hdready/autorun-cpulimit).
+
 ## Feedback
 
 The best way to send feedback is mentioning me, [@hdready](http://twittter.com/hdready) or the original creator of the scripts, [@donmelton](https://twitter.com/donmelton), on Twitter. 
