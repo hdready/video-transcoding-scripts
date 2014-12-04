@@ -1145,11 +1145,11 @@ time {
 
 
     if [[ $move_directory ]]; then
-        echo "Moving existing output file"
+        echo "Moving $output to $move_directory"
         mv -f -v "$output" "$move_directory"
     fi
 
-    echo "Deleting input & crop file"
+    echo "Deleting $input & crop file"
     rm "$input"
     rm "$crop_path"
 
